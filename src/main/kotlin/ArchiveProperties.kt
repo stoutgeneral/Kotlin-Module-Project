@@ -1,14 +1,14 @@
-class ArchiveProperties {
-     val archiveList: MutableList<Archive> = mutableListOf()
+class ArchiveProperties : EntityProperties {
+    val archiveList: MutableList<Archive> = mutableListOf()
 
-    fun createArchive () {
+    override fun createEntity() {
         while (true) {
-            println("Введите название:")
-            val name = readln()
+            println("\nВведите название архива:")
+            val name = readLine()
 
-            if (!name.isNullOrBlank()) {
+            if (name?.isNotBlank() == true) {
                 archiveList.add(Archive(archiveName = name))
-                println("Архив успешно создан\n")
+                println("\nАрхив успешно создан!\n")
                 break
             } else {
                 println(Notification.ARCHIVE_NOTE_ENTRY_ERROR)
@@ -16,11 +16,12 @@ class ArchiveProperties {
         }
     }
 
-    fun showArchiveNames () {
-        println("Список созданных архивов: ")
-        for (archive in archiveList) {
-            println("${archive.archiveName}")
-        }
-
+    override fun showEntity() {
+        if (archiveList.isNotEmpty()) {
+            println("Список созданных архивов: ")
+            archiveList.forEachIndexed { index, archive ->
+                println("$index.  ${archive.archiveName}")
+            }
+        } else println(Notification.EMPTY_LIST)
     }
 }

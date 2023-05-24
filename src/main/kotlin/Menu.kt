@@ -1,16 +1,12 @@
-import java.util.Scanner
+/*import java.util.Scanner
 
 class Menu {
+
     private val scanner = Scanner(System.`in`)
 
-    fun startingMenu (archiveProperties: ArchiveProperties) {
-        while (scanner.toString() != "3") {
-            println("Стартовое меню:\n1. Создать архив \n2. Список созданных архивов \n3. Выход из программы") // Стартовое меню и навигация
+    fun menuNavigation (archiveProperties: ArchiveProperties) {
             when(scanner.nextInt()) {
-                1 -> {
-                    archiveProperties.createArchive()
-                }
-
+                1 -> archiveProperties.createArchive()
                 2 -> {
                     if (archiveProperties.archiveList.isNotEmpty()) { // Проверка содержания архива и переход на экран архива
                         print("Если вы хотите войти в архив, введите его номер, где номер первого архива 0. Вернуться назад - введите -1. ")
@@ -23,22 +19,15 @@ class Menu {
                                 archivesMenu(archive)
                             }
                         }
-                    } else {
-                        println(Notification.EMPTY_LIST)
-                    }
+                    } else println(Notification.EMPTY_LIST)
                 }
-
-                3 -> {
-                    println("Всего доброго!")
-                    break
-                }
+                3 -> println("Всего доброго!")
                 else -> println(Notification.MENU_ENTRY_ERROR)
             }
         }
 
-    }
 
-    fun archivesMenu (archive: Archive) {
+    private fun archivesMenu (archive: Archive) {
         while (scanner.toString() != "3") {
             println("Вы вошли в архив ${archive.archiveName}:\n1. Создать заметку \n2. Список созданных заметок \n3. Вернуться назад") //Экран архива и навигация по нему
             when(scanner.nextInt()) {
@@ -72,3 +61,4 @@ class Menu {
     }
 }
 
+*/

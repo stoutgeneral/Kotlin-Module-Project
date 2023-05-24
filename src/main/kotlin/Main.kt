@@ -1,10 +1,11 @@
 fun main() {
-    val menu = Menu()
-    val archive = ArchiveProperties()
+    val menu = MenuList()
 
-    print("Для использования нужной функции, вам нужно вписать цифру.\n")
-    menu.startingMenu(archive)
+    println("Здравствуйте! Для того, воспользоваться функциями приложения, вам нужно ввести цифру, которая находится рядом с интересующей вас операцией.")
 
-    }
+    val archive: EntityProperties = ArchiveProperties()
+    menu.menuStarting(archive)
 
-
+    val note: EntityProperties = Archive("")
+    menu.menuArchive(note)
+}

@@ -1,15 +1,15 @@
-class Archive(val archiveName: String) {
+class Archive(open val archiveName: String) : EntityProperties {
 
-    val notesList: MutableList<Note> = mutableListOf()
+    private val _notesList: MutableList<Note> = mutableListOf()
 
-    fun createNote () {
+    override fun createEntity() {
         while (true) {
             print("Введите название - ")
             val name = readln()
 
-            if (!name.isNullOrBlank()) { // Проверка на валидный ввод
+            if (name.isNotBlank()) { // Проверка на валидный ввод
                 print("Введите текст заметки - ")
-                notesList.add(Note(name = name, noteText = readln()))
+                _notesList.add(Note(name = name, noteText = readln()))
                 println("Заметка успешно создана\n")
                 break
             } else {
@@ -18,9 +18,11 @@ class Archive(val archiveName: String) {
         }
     }
 
-    fun showNoteNames () {
+    override fun showEntity() {
         println("Список созданных заметок: \n ")
-        for (note in notesList) println("${note.name}")
+        _notesList.forEachIndexed { index, note ->
+            println("$index. ${note.name}")
+        }
     }
 
 }
