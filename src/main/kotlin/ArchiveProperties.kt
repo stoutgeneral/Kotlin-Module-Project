@@ -1,27 +1,32 @@
+import java.util.Scanner
+
 class ArchiveProperties : EntityProperties {
-    val archiveList: MutableList<Archive> = mutableListOf()
+    val archiveList: MutableList<String> = mutableListOf()
+    val scanner = Scanner(System.`in`)
 
     override fun createEntity() {
-        while (true) {
+        //while (true) {
             println("\nВведите название архива:")
             val name = readLine()
 
             if (name?.isNotBlank() == true) {
-                archiveList.add(Archive(archiveName = name))
-                println("\nАрхив успешно создан!\n")
-                break
+                archiveList.add(name)
+                println("\nАрхив \"$name\" успешно создан!")
+                //break
             } else {
                 println(Notification.ARCHIVE_NOTE_ENTRY_ERROR)
             }
-        }
+        //}
+        return
     }
 
     override fun showEntity() {
         if (archiveList.isNotEmpty()) {
-            println("Список созданных архивов: ")
+            println("\nЧтобы вернуться назад нажмите -1. \nСписок созданных архивов: ")
             archiveList.forEachIndexed { index, archive ->
-                println("$index.  ${archive.archiveName}")
+                println("${index}. $archive")
             }
         } else println(Notification.EMPTY_LIST)
+
     }
 }

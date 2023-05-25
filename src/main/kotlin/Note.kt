@@ -1,7 +1,4 @@
 data class Note(
     val name: String,
-    var noteText: String
-
-) {
-}
-
+    val text: String
+)
