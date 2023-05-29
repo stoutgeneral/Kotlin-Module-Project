@@ -1,0 +1,1 @@
+class Note (override var name: String, var text: String) : EntityProperties
