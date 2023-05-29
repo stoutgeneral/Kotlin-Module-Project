@@ -1,4 +1,3 @@
 interface EntityProperties {
-    fun createEntity()
-    fun showEntity()
+    val name: String
 }

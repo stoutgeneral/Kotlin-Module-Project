@@ -1,4 +1,1 @@
-data class Note(
-    val name: String,
-    val text: String
-)
+class Note (override var name: String, var text: String) : EntityProperties
