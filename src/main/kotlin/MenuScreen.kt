@@ -9,8 +9,8 @@ class MenuScreen {
             "\nВы вошли в заметку:\n1. Просмотреть заметку. \n2. Вернуться назад"
     }
 
-    fun showNote (noteName: String, noteText: String) {
-        println("Название заметки: $noteName")
-        println("Текст заметки: $noteText")
+    fun showNote (note: Note) {
+        println("Название заметки: ${note.name}")
+        println("Текст заметки: ${note.text}")
     }
 }

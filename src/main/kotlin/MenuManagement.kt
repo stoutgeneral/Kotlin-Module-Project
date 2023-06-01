@@ -1,23 +1,15 @@
-class MenuManagement(val archiveManagment: ArchiveManagment, val menu: MenuScreen) {
+class MenuManagement(val archiveManagment: ArchiveManagment, val menuScreen: MenuScreen) {
 
-    fun startingMenu() {
-        while (true) {
-            println(MenuScreen.STARTING_MENU)
-            when (readln().toIntOrNull()) {
-                1 -> createArchive()
-                2 -> showArhiveList()
-                3 -> return println("Всего доброго!")
-                else -> println(Notification.MENU_ENTRY_ERROR)
-            }
-        }
+    fun start() {
+        menu({ createArchive() }, { showArchiveList() }, MenuScreen.STARTING_MENU)
     }
 
-    private fun archiveMenu(archive: Archive) {
+    private fun menu(onCreateItem: () -> Unit, listOutput: () -> Unit, showingMenu: String) {
         while (true) {
-            println(MenuScreen.ARCHIVE_MENU)
+            println(showingMenu)
             when (readln().toIntOrNull()) {
-                1 -> createNote(archive)
-                2 -> showNoteList(archive)
+                1 -> onCreateItem()
+                2 -> listOutput()
                 3 -> return
                 else -> println(Notification.MENU_ENTRY_ERROR)
             }
@@ -38,11 +30,6 @@ class MenuManagement(val archiveManagment: ArchiveManagment, val menu: MenuScree
         }
     }
 
-    fun showArhiveList() {
-        val archives = archiveManagment.getArhive()
-        showList(archives, "архивов") { archive -> archiveMenu(archive as Archive) }
-    }
-
     private fun createNote(archive: Archive) {
         while (true) {
             print("\nВведите название заметки: ")
@@ -61,40 +48,45 @@ class MenuManagement(val archiveManagment: ArchiveManagment, val menu: MenuScree
         }
     }
 
-    private fun noteMenu(note: Note) {
-        while (true) {
-            println(MenuScreen.NOTE_MENU)
-            when (readln()?.toIntOrNull()) {
-                1 -> menu.showNote(note.name, note.text)
-                2 -> return
-                else -> println(Notification.MENU_ENTRY_ERROR)
-            }
-        }
-    }
+    private fun showArchiveList() {
+        val archives = archiveManagment.getArhive()
+        showList(archives, "архивов") { archive ->
+            menu({ createNote(archive as Archive) },{showNoteList(archive as Archive)}, MenuScreen.ARCHIVE_MENU)}}
 
     fun showNoteList(archive: Archive) {
         val notes = archive.getNote()
         showList(notes, "заметок") { note -> noteMenu(note as Note) }
     }
 
-    fun showList(entities: List<EntityProperties>, entityName: String, entityMenu: (Any) -> Unit) {
-        if (entities.isEmpty()) {
-            println(Notification.EMPTY_LIST)
-        } else {
-            println("\nВведите -1, чтобы вернуться в стартовое меню.\n Список $entityName:")
-            entities.forEachIndexed { index, any -> println("$index. ${any.name}") }
-
-            val input = readLine()?.toIntOrNull()
-            when (input) {
-                -1 -> return
-                in 0..entities.size -> {
-                    val entity = entities[input!!]
-                    entityMenu(entity)
-                }
+     fun noteMenu(note: Note) {
+        while (true) {
+            println(MenuScreen.NOTE_MENU)
+            when (readln().toIntOrNull()) {
+                1 -> menuScreen.showNote(note)
+                2 -> return
                 else -> println(Notification.MENU_ENTRY_ERROR)
             }
         }
     }
-}
 
-////
+    fun showList(entities: List<EntityProperties>, entityName: String, entityMenu: (Any) -> Unit) {
+            if (entities.isEmpty()) {
+                println(Notification.EMPTY_LIST)
+            } else {
+                println("\nВведите -1, чтобы вернуться в стартовое меню.\n Список $entityName:")
+                entities.forEachIndexed { index, any -> println("$index. ${any.name}") }
+
+                val input = readLine()?.toIntOrNull()
+                when (input) {
+                    -1 -> return
+                    in 0..entities.size -> {
+                        val entity = entities[input!!]
+                        entityMenu(entity)
+                    }
+                    else -> {
+                        println(Notification.MENU_ENTRY_ERROR)
+                    }
+                }
+            }
+    }
+}
