@@ -1,5 +1,10 @@
 fun main() {
-    // ваш код начнется здесь
-    // вы не должны ограничиваться только классом Main и можете создавать свои классы по необходимости
-    println("Привет")
+    val archive = ArchiveManagment()
+    val menu = MenuScreen()
+    val menuManager = MenuManagement(archive,menu)
+
+    println("Добро пожаловать в стартовое меню. Для навигации по меню вводите цифры.")
+
+    menuManager.start()
+
 }
